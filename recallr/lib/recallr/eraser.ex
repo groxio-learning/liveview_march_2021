@@ -1,8 +1,15 @@
 defmodule Recallr.Eraser do
   defstruct [:text, :characters]
-  def new(rounds, text) do
+
+  def new(rounds \\ 2, text \\ "did you try turning it off and on again") do
     length = String.length(text)
-    %Recallr.Eraser{text: text, characters: [[1, 3, 5], [2, 4, 6, 7]]}
+    chunks = ceil(length / rounds)
+    schedule =
+      1..length
+      |> Enum.shuffle
+      |> Enum.chunk_every(chunks)
+
+    %Recallr.Eraser{text: text, characters: schedule}
   end
 
   def erase(%{text: text, characters: [first_round | rounds]} = acc) do
