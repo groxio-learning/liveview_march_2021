@@ -17,6 +17,7 @@ defmodule RecallrWeb.Router do
   scope "/", RecallrWeb do
     pipe_through :browser
 
+    live "/choose", PickerLive
     live "/count", CountLive
     live "/", PageLive, :index
     live "/memorize", MemorizeLive
