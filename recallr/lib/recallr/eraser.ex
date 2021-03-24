@@ -12,20 +12,24 @@ defmodule Recallr.Eraser do
     %Recallr.Eraser{text: text, characters: schedule}
   end
 
-  def erase(%{text: text, characters: characters} = acc) do
-    text
-    |> String.graphemes()
-    |> Enum.with_index()
-    |> Enum.map(fn {char, index} = char->
-      replace(char, hd(characters))
-    end)
+  def erase(%{text: text, characters: [first_round | rounds]} = acc) do
+    new_text = get_text(text, first_round)
+    %{acc| text: new_text, characters: rounds}
   end
 
-  defp replace({char, index}, round) do
-    if index in round do
-      {"_", index}
-    else
-      {char, index}
-    end
+  defp get_text(text, round) do
+    text
+    |> String.replace([",", ".", " "], "")
+    |> String.graphemes()
+    |> Enum.with_index(1)
+    |> Enum.map(fn {char, index} -> replace(char, index in round) end)
+    |> Enum.join
   end
+
+  # defp replace(" ", _boolean), do: char
+  # defp replace(",", _boolean), do: char
+  # defp replace(".", _boolean), do: char
+  defp replace(_char, true), do: "_"
+  defp replace(char, false), do: char
+
 end
