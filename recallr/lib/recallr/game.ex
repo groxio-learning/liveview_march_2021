@@ -3,7 +3,7 @@ defmodule Recallr.Game do
   def plan_new(text, steps) do
     size = String.length(text)
     chunk_size = ceil(size / 2)
-    
+
     plan = 1..size |> Enum.shuffle |> Enum.chunk_every(chunk_size)
     %{plan: plan, text: text}
   end
