@@ -1,5 +1,7 @@
 defmodule Recallr.Eraser do
   defstruct [:text, :characters]
+  @characters [",", ".", " ", "\n", "!"]
+
   def new(rounds, text) do
     length = String.length(text)
     %Recallr.Eraser{text: text, characters: [[1, 3, 5], [2, 4, 6, 7]]}
@@ -12,16 +14,13 @@ defmodule Recallr.Eraser do
 
   defp get_text(text, round) do
     text
-    |> String.replace([",", ".", " "], "")
     |> String.graphemes()
     |> Enum.with_index(1)
     |> Enum.map(fn {char, index} -> replace(char, index in round) end)
     |> Enum.join
   end
 
-  # defp replace(" ", _boolean), do: char
-  # defp replace(",", _boolean), do: char
-  # defp replace(".", _boolean), do: char
+  defp replace(char, _in_round) when char in @characters, do: char
   defp replace(_char, true), do: "_"
   defp replace(char, false), do: char
 
