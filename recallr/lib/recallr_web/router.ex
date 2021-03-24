@@ -19,6 +19,7 @@ defmodule RecallrWeb.Router do
 
     live "/count", CountLive
     live "/", PageLive, :index
+    live "/memorize", MemorizeLive
   end
 
   # Other scopes may use custom stacks.

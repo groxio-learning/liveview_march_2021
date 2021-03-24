@@ -2,7 +2,7 @@ defmodule Recallr.Eraser do
   defstruct [:text, :characters]
   @characters [",", ".", " ", "\n", "!"]
 
-  def new(rounds \\ 2, text \\ "did you try turning it off and on again") do
+  def new(rounds \\ 4, text \\ "The needs of the many outweigh the needs of the few, or the one!") do
     length = String.length(text)
     chunks = ceil(length / rounds)
     schedule =
