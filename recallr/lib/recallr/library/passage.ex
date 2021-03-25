@@ -15,5 +15,7 @@ defmodule Recallr.Library.Passage do
     passage
     |> cast(attrs, [:rounds, :name, :text])
     |> validate_required([:rounds, :name, :text])
+    |> validate_length(:name, min: 4)
+    # |> unique_constraint(:name)
   end
 end
