@@ -2,11 +2,16 @@ defmodule Recallr.Library do
   @moduledoc """
   The Library context.
   """
+  @topic "count_change"
 
   import Ecto.Query, warn: false
   alias Recallr.Repo
 
   alias Recallr.Library.Passage
+
+  def notify do
+    Phoenix.PubSub.broadcast(Recallr.PubSub, @topic, :change)
+  end
 
   def first do
     q = from p in Passage, where: p.id > 0, limit: 1
@@ -64,9 +69,12 @@ defmodule Recallr.Library do
 
   """
   def create_passage(attrs \\ %{}) do
-    %Passage{}
+    result = %Passage{}
     |> Passage.changeset(attrs)
     |> Repo.insert()
+
+    notify()
+    result
   end
 
   @doc """
@@ -100,7 +108,9 @@ defmodule Recallr.Library do
 
   """
   def delete_passage(%Passage{} = passage) do
-    Repo.delete(passage)
+    result = Repo.delete(passage)
+    notify()
+    result
   end
 
   @doc """
