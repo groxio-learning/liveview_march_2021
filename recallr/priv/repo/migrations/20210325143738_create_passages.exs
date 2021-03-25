@@ -9,6 +9,7 @@ defmodule Recallr.Repo.Migrations.CreatePassages do
 
       timestamps()
     end
+    # create unique_index(:name)
 
   end
 end
