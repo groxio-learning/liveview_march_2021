@@ -8,6 +8,19 @@ defmodule Recallr.Library do
 
   alias Recallr.Library.Passage
 
+  def first do
+    q = from p in Passage, where: p.id > 0, limit: 1
+    q |> Repo.one
+  end
+
+  def next(id) do
+    (from p in Passage, where: p.id > ^id, order_by: [asc: :id], limit: 1)
+    |> Repo.one()
+    |> Kernel.||(first())
+    |> IO.inspect
+    |> Map.get(:id)
+  end
+
   @doc """
   Returns the list of passages.
 
@@ -35,6 +48,7 @@ defmodule Recallr.Library do
       ** (Ecto.NoResultsError)
 
   """
+  # Prose.find(socket.assigns.id)
   def get_passage!(id), do: Repo.get!(Passage, id)
 
   @doc """

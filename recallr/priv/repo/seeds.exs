@@ -11,3 +11,11 @@
       Recallr.Repo.insert!(%Recallr.Library.Passage{name: "princess_bride", rounds: 4, text: "Hello, my name is Inigo Montoya. You killed my father.
           Prepare to die."})
       Recallr.Repo.insert!(%Recallr.Library.Passage{name: "megamind", rounds: 4, text: "Incredibly handsome criminal genius and master of all villany!"})
+
+
+alias Recallr.Library
+
+attrs = %{name: "mahir", rounds: 2, text: "Water! What is water? Asks the fish"}
+
+# iex> create_passage(%{field: value})
+Library.create_passage(attrs)
