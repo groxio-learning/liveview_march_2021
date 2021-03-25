@@ -1,9 +1,10 @@
 defmodule RecallrWeb.MemorizeLive do
   use RecallrWeb, :live_view
-  alias Recallr.Eraser
+  alias Recallr.{Eraser, Library}
 
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, eraser: Eraser.new())}
+  def mount(%{"id" => id}, _session, socket) do
+    passage= Library.get_passage!(id)
+    {:ok, assign(socket, eraser: Eraser.new(passage.rounds, passage.text))}
   end
 
   def handle_event("erase", _value, socket) do
@@ -16,9 +17,8 @@ defmodule RecallrWeb.MemorizeLive do
 
   def render(assigns) do
     ~L"""
-    <h1>This is the Memory game</h1>
-    <pre> <%= inspect @eraser.characters %> </pre>
-    <pre> <%= inspect @eraser.text %> </pre>
+    <h1>Memorize this quote from</h1>
+    <pre> <%= Phoenix.HTML.raw @eraser.text %> </pre>
     <button phx-click="erase"> Erase </button>
     """
   end

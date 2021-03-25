@@ -20,7 +20,7 @@ defmodule RecallrWeb.Router do
     live "/choose", PickerLive
     live "/count", CountLive
     live "/", PageLive, :index
-    live "/memorize", MemorizeLive
+    live "/memorize/:id", MemorizeLive
 
     live "/passages", PassageLive.Index, :index
     live "/passages/new", PassageLive.Index, :new
