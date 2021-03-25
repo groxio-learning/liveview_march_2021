@@ -4,6 +4,11 @@ defmodule RecallrWeb.PickerLive do
   alias Recallr.Library
 
  def mount(_params, _session, socket) do
+
+   if connected?(socket) do
+      Phoenix.PubSub.subscribe(Recallr.PubSub, "count_change")
+   end
+
   {:ok,
     socket
     |> assign(id: Library.first().id)
@@ -33,4 +38,7 @@ def handle_event("choose", _value, socket) do
   {:noreply, push_redirect(socket, to: "/memorize/#{socket.assigns.id}")}
 end
 
+def handle_info(:change, socket) do
+  {:noreply, count(socket)}
+end
 end
