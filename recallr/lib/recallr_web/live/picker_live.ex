@@ -4,7 +4,16 @@ defmodule RecallrWeb.PickerLive do
   alias Recallr.Library
 
  def mount(_params, _session, socket) do
-  {:ok, socket |> assign(id: Library.first().id) |> lookup()}
+  {:ok,
+    socket
+    |> assign(id: Library.first().id)
+    |> lookup()
+    |> count
+  }
+ end
+
+ def count(socket) do
+   assign(socket, count: Enum.count(Library.list_passages))
  end
 
  def lookup(socket) do
@@ -20,12 +29,8 @@ defmodule RecallrWeb.PickerLive do
   {:noreply, next(socket)}
 end
 
- def render(assigns) do
-  ~L"""
-  <h1>Pick one</h1>
-  <pre> <%= @prose.text %> </pre>
-  <button phx-click="next"> Next </button>
-  """
- end
+def handle_event("choose", _value, socket) do
+  {:noreply, push_redirect(socket, to: "/memorize/#{socket.assigns.id}")}
+end
 
 end
