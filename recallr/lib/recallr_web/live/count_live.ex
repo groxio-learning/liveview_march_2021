@@ -3,12 +3,12 @@ defmodule RecallrWeb.CountLive do
   alias Recallr.Counter
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, things: "mushrooms", count: 42)}
+    {:ok, assign(socket, things: "mushrooms fans", count: 42)}
   end
 
   def render(assigns) do
     ~L"""
-      <h1>This is the Counter that counts <%= @things %> </h1>
+    <%= live_component(@socket, RecallrWeb.HeaderComponent, things: @things) %>
       <p> <%= @count %> </p>
       <p> <%= inspect self() %> </p>
       <button phx-click="add"> Increment </button>
