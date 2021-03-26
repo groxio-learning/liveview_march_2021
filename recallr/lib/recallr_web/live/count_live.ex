@@ -9,18 +9,11 @@ defmodule RecallrWeb.CountLive do
   def render(assigns) do
     ~L"""
     <%= live_component(@socket, RecallrWeb.HeaderComponent, things: @things) %>
-    <%= live_component(@socket, RecallrWeb.CounterComponent, count: @count) %>
+    <%= live_component(@socket, RecallrWeb.CounterComponent, id: 1, count: @count) %>
     <hr/>
-    <%= live_component(@socket, RecallrWeb.CounterComponent, count: @count) %>
+    <%= live_component(@socket, RecallrWeb.CounterComponent, id: 2, count: @count) %>
+    <button phx-click="add" phx-target="<%= 2 %>"> Increment </button>
     """
-  end
-
-  def handle_event("add", _value, socket) do
-    {:noreply, increment(socket)}
-  end
-
-  def increment(socket) do
-    update(socket, :count, &Counter.increment/1)
   end
 
 end
