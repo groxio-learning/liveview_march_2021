@@ -9,9 +9,9 @@ defmodule RecallrWeb.CountLive do
   def render(assigns) do
     ~L"""
     <%= live_component(@socket, RecallrWeb.HeaderComponent, things: @things) %>
-      <p> <%= @count %> </p>
-      <p> <%= inspect self() %> </p>
-      <button phx-click="add"> Increment </button>
+    <%= live_component(@socket, RecallrWeb.CounterComponent, count: @count) %>
+    <hr/>
+    <%= live_component(@socket, RecallrWeb.CounterComponent, count: @count) %>
     """
   end
 
